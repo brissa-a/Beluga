@@ -14,6 +14,8 @@ class AccountApi  {
     public var module : Account;
 
     public function new() {
+		beluga = Beluga.getInstance();
+		module = Beluga.getInstance().getModuleInstance(Account);
     }
 
     public function doLogin(args : {

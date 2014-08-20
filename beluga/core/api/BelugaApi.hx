@@ -5,27 +5,23 @@ import haxe.Session;
 
 import beluga.core.macro.ModuleLoader;
 
-class BelugaApi implements IAPI<String> {
-    public var beluga : Beluga;
-    public var module : String;
+class BelugaApi {
 
-    private function handleSessionPath() {}
-
-    public function new() {}
-
-    //Handle url like www.beluga.fr?trigger=login
-    public function doDefault(d : Dispatch) {
-        Sys.print("Welcome !");
-    }
+	public var moduleList = new Map < String, Dispatch -> Void >() ;
 	
-	public function doBeluga(d : Dispatch) {
-		d.dispatch(this);
+	public function new() 
+	{		
 	}
 
-    /*
-     * Modules API are generated like:
-         * public function doModule(d : Dispatch) {
-            * d.dispatch(new ModuleApi(beluga));
-         * }
-     */
+	public function doDefault(moduleName : String, d : Dispatch) {
+		//Init session
+		Session.start();
+		if (moduleList.exists(moduleName)) {
+			moduleList[moduleName](d);
+		} else {
+			trace("Module " + moduleName + " not found");
+		}
+		Session.close();
+	}
+
 }

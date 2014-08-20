@@ -1,5 +1,7 @@
 package beluga.module.account;
 
+import beluga.module.account.api.AccountApi;
+import haxe.web.Dispatch;
 import haxe.xml.Fast;
 import haxe.Session;
 import sys.db.Types.SId;
@@ -20,7 +22,8 @@ class AccountImpl extends ModuleImpl implements AccountInternal implements Metad
 
 	public var triggers = new AccountTrigger();
 	public var widgets : AccountWidget;
-
+	public var api : AccountApi;
+	
 	public var lastLoginError : Null<LastLoginErrorType> = null;
 
 	public var loggedUser(get, set) : User;
@@ -33,6 +36,10 @@ class AccountImpl extends ModuleImpl implements AccountInternal implements Metad
 
 	override public function initialize(beluga : Beluga) {
 		this.widgets = new AccountWidget();
+		this.api = new AccountApi();
+		beluga.api.moduleList["account"] = function (d : Dispatch) {
+			d.dispatch(this.api);
+		}
 	}
 
     public function logout() : Void {

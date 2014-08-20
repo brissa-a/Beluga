@@ -61,7 +61,6 @@ class Beluga {
 
         //Create beluga API
         api = new BelugaApi();
-        api.beluga = this;
     }
 
     //For all initialization code that require beluga's instance
