@@ -10,12 +10,9 @@ import beluga.core.module.ModuleImpl;
 import beluga.module.account.model.User;
 import beluga.module.account.exception.LoginAlreadyExistException;
 import beluga.module.account.ESubscribeFailCause;
-import beluga.core.macro.MetadataReader;
+import beluga.core.macro.MetadataReader;	
+import beluga.core.validation.Validator;
 
-enum LastLoginErrorType {
-	InternalError;
-	WrongLogin;
-}
 
 class AccountImpl extends ModuleImpl implements AccountInternal implements MetadataReader {
 
@@ -60,44 +57,43 @@ class AccountImpl extends ModuleImpl implements AccountInternal implements Metad
         } else {
             loggedUser = user.first();
 			triggers.loginSuccess.dispatch();
-        }
+		}
 		triggers.afterLogin.dispatch();
     }
 
-    private function subscribeCheckArgs(args : {
+	public function loginValidation(args : {
         login : String,
-        password : String,
-        password_conf : String,
-        email : String
-    }) : String {
+        password : String
+    }) {
+		//Form validation
+		var validations = {
+			login: {
+				sizeBetween: Validator.rangeLength(args.login, 2, 255),
+				notBlanckOrNull:Validator.notBlanckOrNull(args.login)
+			},
+			password: {
+				sizeBetween: Validator.rangeLength(args.login, 2, 255),
+				notBlanckOrNull: Validator.notBlanckOrNull(args.login)
+			}
+		};
 
-        if (args.login == "") {
-            return "invalid login";
-        }
-        if (args.password == "" || args.password_conf == "") {
-            return "missing password";
-        }
-        if (args.password != args.password_conf) {
-            return "passwords don't match";
-        }
-
-        for (tmp in User.manager.dynamicSearch( {login : args.login} )) {
-            return "login already used";
-        }
-        //TODO: place user form validation here
-        //Also validate that the user is unique with something like this
-        //User.manager.dynamicSearch({login : args.login, hashPassword: ahaxe.crypto.Md5.encode(args.password).first() != null;
-
-        return "";
-    }
-
+		//Update widget
+		if (!Validator.validate(validations)) {
+			widgets.loginForm.loginErrorKeys = Validator.getErrorKeys(validations.login);
+			widgets.loginForm.passwordErrorKeys = Validator.getErrorKeys(validations.password);
+			triggers.loginValidationError.dispatch();
+			return false;
+		}
+		return true;
+	}
+	
     public function subscribe(args : {
         login : String,
         password : String,
         password_conf : String,
         email : String
     }) {
-        var error = subscribeCheckArgs(args);
+        var error = "";
         if (error == "") {
             var user = new User();
             user.login = args.login;
