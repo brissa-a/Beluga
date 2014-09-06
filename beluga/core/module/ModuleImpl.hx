@@ -7,6 +7,7 @@ import haxe.Resource;
 import haxe.xml.Fast;
 import sys.io.File;
 import beluga.core.macro.ConfigLoader.ModuleConfig;
+import beluga.core.trigger.Dispatcher;
 
 /**
  * ...
@@ -44,11 +45,12 @@ class ModuleImpl implements ModuleInternal
 		
 	}
 
-	
 	public function getWidget(name : String) : Widget {
 		//First retrieve the class path
 		var module = Type.getClassName(Type.getClass(this)).split(".")[2];
 		return new Widget(module, name);
 	}
+	
+	public var dispatcher = new Dispatcher();
 
 }

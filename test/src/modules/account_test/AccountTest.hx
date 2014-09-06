@@ -26,26 +26,31 @@ class AccountTest {
     public function new(beluga : Beluga) {
         this.beluga = beluga;
         this.acc = beluga.getModuleInstance(Account);
-        acc.triggers.loginSuccess.add(this.loginSuccess);
-        acc.triggers.loginFail.add(this.loginFail);
+		
+		//Binding login
+        acc.triggers.loginSuccess.add(this.loginSuccess);		
+        acc.triggers.loginWrongPassword.add(this.loginFail.bind("Invalid login and / or password"));
+        acc.triggers.loginWrongLogin.add(this.loginFail.bind("Invalid login and / or password"));
+        acc.triggers.loginInternalError.add(this.loginFail.bind("Something's wrong in database"));
+        acc.triggers.loginUserBanned.add(this.loginFail.bind("Your account as been banned"));
 
         acc.triggers.subscribeFail.add(this.subscribeFail);
         acc.triggers.subscribeSuccess.add(this.subscribeSuccess);
-
+		
         acc.triggers.afterLogout.add(this.logout);
     }
 
     /*
      * Logination
      */
-    public function loginSuccess() {
+	public function loginSuccess(args: { args: {login:String, password:String}, user : User} ) {
         var html = Renderer.renderDefault("page_accueil", "Accueil", { success : "Authentification succeeded !" } );
         Sys.print(html);
     }
 
-    public function loginFail(args : {err : String}) {
+    public function loginFail(err : String, unused_args : Dynamic) {
         var widget = acc.getWidget("login");
-        widget.context = {error : args.err};
+        widget.context = {error : err};
 
         var loginWidget = widget.render();
         var html = Renderer.renderDefault("page_login", "Authentification", {

@@ -15,24 +15,15 @@ import beluga.module.account.exception.LoginAlreadyExistException;
 import beluga.module.account.ESubscribeFailCause;
 import beluga.core.macro.MetadataReader;
 
-enum LastLoginErrorType {
-    InternalError;
-    WrongLogin;
-}
-
 class AccountImpl extends ModuleImpl implements AccountInternal {
 
     private static inline var SESSION_USER = "session_user";
 
     public var triggers = new AccountTrigger();
     public var widgets : AccountWidget;
-
-    public var lastLoginError : Null<LastLoginErrorType> = null;
-
     public var loggedUser(get, set) : User;
 
     public var isLogged(get, never) : Bool;
-
     public function new() {
         super();
     }
@@ -58,21 +49,28 @@ class AccountImpl extends ModuleImpl implements AccountInternal {
 
         if (user.length > 1) {
             //Somethings wrong in database
-            triggers.loginFail.dispatch({err: "Something's wrong in database"});
+			dispatcher.dispatch(triggers.loginInternalError, args);
         } else if (user.length == 0) {
-            //login wrong
-            triggers.loginFail.dispatch({err: "Unknown user"});
+			dispatcher.dispatch(triggers.loginWrongLogin, args);
         } else {
             var tmp = user.first();
             if (tmp.hashPassword != haxe.crypto.Md5.encode(args.password)) {
-                triggers.loginFail.dispatch({err: "Invalid login and / or password"});
+				dispatcher.dispatch(triggers.loginWrongPassword, {
+					args: args,
+					user: tmp
+				});
             } else {
-                // you cannot compare like this : tmp.isBan == true, it will always return false !
                 if (tmp.isBan) {
-                    triggers.loginFail.dispatch({err: "Your account as been bannished"});
+                    dispatcher.dispatch(triggers.loginUserBanned, {
+						args: args,
+						user: tmp
+					});
                 } else {
                     loggedUser = tmp;
-                    triggers.loginSuccess.dispatch();
+                    dispatcher.dispatch(triggers.loginSuccess, {
+						args: args,
+						user: tmp
+					});
                 }
             }
         }

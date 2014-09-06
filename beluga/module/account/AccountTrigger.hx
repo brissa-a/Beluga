@@ -11,8 +11,11 @@ import beluga.module.account.model.User;
 class AccountTrigger
 {
     //Login
-    public var loginFail = new Trigger<{err : String}>();
-    public var loginSuccess = new TriggerVoid();
+	public var loginWrongLogin = new Trigger<{login:String, password:String}>();
+	public var loginWrongPassword = new Trigger<{args:{login:String, password:String}, user : User}>();
+	public var loginInternalError = new Trigger<{login:String, password:String}>();
+	public var loginUserBanned = new Trigger<{args:{login:String, password:String}, user : User}>();
+    public var loginSuccess = new Trigger<{args:{login:String, password:String}, user : User}>();
 
     //Logout
     public var afterLogout = new TriggerVoid();
