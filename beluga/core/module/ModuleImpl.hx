@@ -51,7 +51,7 @@ class ModuleImpl implements ModuleInternal
 		var module = Type.getClassName(Type.getClass(this)).split(".")[2];
 		return new Widget(module, name);
 	}
-	
+
 	public var lastDispatch : LastDispatch;
 
 }

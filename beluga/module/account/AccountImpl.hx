@@ -14,6 +14,7 @@ import beluga.module.account.model.BlackList;
 import beluga.module.account.exception.LoginAlreadyExistException;
 import beluga.module.account.ESubscribeFailCause;
 import beluga.core.macro.MetadataReader;
+import beluga.core.widget.AccountWidget;
 
 using beluga.core.trigger.TriggerHelper;
 
@@ -21,8 +22,13 @@ class AccountImpl extends ModuleImpl implements AccountInternal {
 
     private static inline var SESSION_USER = "session_user";
 
-    public var triggers = new AccountTrigger();
-    public var widgets : AccountWidget;
+    public var triggers = new AccountTrigger();	
+	
+	public function createWidget<T : AccountWidget>(clazz : Class<T>) : AccountWidget {
+		return Type.createInstance(clazz, []);
+	}
+
+	
     public var loggedUser(get, set) : User;
 
     public var isLogged(get, never) : Bool;
@@ -31,7 +37,6 @@ class AccountImpl extends ModuleImpl implements AccountInternal {
     }
 
     override public function initialize(beluga : Beluga) {
-        this.widgets = new AccountWidget();
     }
 
     public function getLoggedUser() : User {

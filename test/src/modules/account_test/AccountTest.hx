@@ -6,6 +6,8 @@ import beluga.core.macro.MetadataReader;
 import beluga.module.account.model.User;
 import beluga.module.account.ESubscribeFailCause;
 import beluga.module.account.Account;
+import beluga.module.account.widget.SubscribeForm;
+import beluga.module.account.widget.LoginForm;
 import haxe.Resource;
 import main_view.Renderer;
 
@@ -74,7 +76,7 @@ class AccountTest {
 
     public function subscribeFail(args : {err : String}) {
         var html = Renderer.renderDefault("page_subscribe", "Inscription", {
-            subscribeWidget: acc.widgets.subscribeForm.render(),
+            subscribeWidget: acc.createWidget(SubscribeForm).render(),
             error : args.err
         });
         Sys.print(html);

@@ -9,23 +9,15 @@ import haxe.Resource;
  */
 class MttWidget implements Widget
 {
-
-	private static var id = 0;
 	private var template : Template;
 
-	public function new(mttfile : String) 
+	private function new(mttfile : String) 
 	{
 		var templateFileContent = Resource.getString(mttfile);
 		template = new haxe.Template(templateFileContent);
 	}
-
-	public function render() : String {
-		var context = getContext();
-        return template.execute(context);
-	}
-
-	private function getContext() {
-		return { };
-	}
 	
+	public function render() : String {
+        return template.execute({});
+	}
 }
