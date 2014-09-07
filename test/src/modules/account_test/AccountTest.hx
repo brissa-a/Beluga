@@ -30,11 +30,11 @@ class AccountTest {
         this.acc = beluga.getModuleInstance(Account);
 		
 		//Binding login
-        acc.triggers.loginSuccess.add(this.loginSuccess);		
-        acc.triggers.loginWrongPassword.add(this.loginFail.bind("Invalid login and / or password"));
-        acc.triggers.loginWrongLogin.add(this.loginFail.bind("Invalid login and / or password"));
-        acc.triggers.loginInternalError.add(this.loginFail.bind("Something's wrong in database"));
-        acc.triggers.loginUserBanned.add(this.loginFail.bind("Your account as been banned"));
+        acc.triggers.loginSuccess.add(displayLogin);
+        acc.triggers.loginWrongPassword.add(displayLogin);
+        acc.triggers.loginWrongLogin.add(displayLogin);
+        acc.triggers.loginInternalError.add(displayLogin);
+        acc.triggers.loginUserBanned.add(displayLogin);
 
         acc.triggers.subscribeFail.add(this.subscribeFail);
         acc.triggers.subscribeSuccess.add(this.subscribeSuccess);
@@ -45,6 +45,14 @@ class AccountTest {
     /*
      * Logination
      */
+	public function displayLogin(unused_parameter : Dynamic ) {
+		trace("Display Login");
+		var html = Renderer.renderDefault("page_login", "Authentification", {
+            loginWidget: acc.createWidget(LoginForm).render()
+        });
+		Sys.print(html);
+	}
+
 	public function loginSuccess(args: { args: {login:String, password:String}, user : User} ) {
         var html = Renderer.renderDefault("page_accueil", "Accueil", { success : "Authentification succeeded !" } );
         Sys.print(html);
@@ -53,7 +61,7 @@ class AccountTest {
     public function loginFail(err : String, unused_args : Dynamic) {
         var widget = acc.getWidget("login");
         widget.context = {error : err};
-
+		
         var loginWidget = widget.render();
         var html = Renderer.renderDefault("page_login", "Authentification", {
             loginWidget: loginWidget
@@ -77,7 +85,7 @@ class AccountTest {
     public function subscribeFail(args : {err : String}) {
         var html = Renderer.renderDefault("page_subscribe", "Inscription", {
             subscribeWidget: acc.createWidget(SubscribeForm).render(),
-            error : args.err
+            error : args.err 
         });
         Sys.print(html);
     }

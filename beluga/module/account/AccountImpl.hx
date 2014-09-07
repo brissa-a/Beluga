@@ -53,31 +53,30 @@ class AccountImpl extends ModuleImpl implements AccountInternal {
         password : String
     }) {
         var user : List<User> = User.manager.dynamicSearch({login : args.login});
-
         if (user.length > 1) {
             //Somethings wrong in database
-			lastDispatch = triggers.loginInternalError.dispatchSaveLast(args);
+			triggers.loginInternalError.dispatchSaveLast(args, this);
         } else if (user.length == 0) {
-			lastDispatch = triggers.loginWrongLogin.dispatchSaveLast(args);
+			triggers.loginWrongLogin.dispatchSaveLast(args, this);
         } else {
             var tmp = user.first();
             if (tmp.hashPassword != haxe.crypto.Md5.encode(args.password)) {
-				lastDispatch = triggers.loginWrongPassword.dispatchSaveLast({
+				triggers.loginWrongPassword.dispatchSaveLast({
 					args: args,
 					user: tmp
-				});
+				}, this);
             } else {
                 if (tmp.isBan) {
-                    lastDispatch = triggers.loginUserBanned.dispatchSaveLast({
+                    triggers.loginUserBanned.dispatchSaveLast({
 						args: args,
 						user: tmp
-					});
+					}, this);
                 } else {
                     loggedUser = tmp;
-                    lastDispatch = triggers.loginSuccess.dispatchSaveLast({
+                    triggers.loginSuccess.dispatchSaveLast({
 						args: args,
 						user: tmp
-					});
+					}, this);
                 }
             }
         }

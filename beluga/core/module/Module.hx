@@ -1,5 +1,6 @@
 package beluga.core.module;
 import beluga.core.Widget;
+import beluga.core.trigger.TriggerHelper;
 
 /**
  * ...
@@ -8,4 +9,5 @@ import beluga.core.Widget;
 interface Module
 {
 	public function getWidget(name : String) : Widget;
+	public var lastDispatch : LastDispatch;
 }

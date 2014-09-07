@@ -10,18 +10,18 @@ typedef LastDispatch = { trigger: Dynamic, data : Dynamic };
 class TriggerHelper
 {
 
-	public static function dispatchSaveLast<T>(trigger : Trigger<T>, data : T ) : LastDispatch {
+	public static function dispatchSaveLast<T>(trigger : Trigger<T>, data : T, container : {lastDispatch : LastDispatch} ) {
+		container.lastDispatch = { trigger: trigger, data: data };
 		trigger.dispatch(data);		
-		return { trigger: trigger, data: data };
 	}
 
 }
 
 class TriggerVoidHelper
 {
-	public static function dispatchSaveLast(trigger : TriggerVoid) : LastDispatch {
+	public static function dispatchSaveLast(trigger : TriggerVoid, container : { lastDispatch : LastDispatch } ) {
+		container.lastDispatch = { trigger: trigger, data: null };
 		trigger.dispatch();
-		return { trigger: trigger, data: null };
 	}
 
 }

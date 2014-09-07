@@ -18,21 +18,32 @@ class LoginForm extends AccountWidget
 		isLogged : Bool,
 		loggedUser : User,
 		base_url : String,
-		id: Int
+		id: Int,
+		error: String
 	};
 	
 	public static var id(default, null) = 0;
 	
-	
 	private function new (mttfile = "beluga_account_login.mtt") {
 		super(mttfile);
 		var acc = Beluga.getInstance().getModuleInstance(Account);
-
+		var error = null;
+		trace(acc.lastDispatch);
+		if (acc.lastDispatch.trigger == acc.triggers.loginWrongLogin) {
+			error = "Invalid login and / or password";
+		} else if (acc.lastDispatch.trigger == acc.triggers.loginWrongPassword) {			
+			error = "Invalid login and / or password";
+		} else if (acc.lastDispatch.trigger == acc.triggers.loginInternalError) {
+			error = "Something's wrong in database";			
+		} else if (acc.lastDispatch.trigger == acc.triggers.loginUserBanned) {
+			error = "Your account as been banned";			
+		}
 		this.context = {
 			isLogged : acc.isLogged,
 			loggedUser : acc.loggedUser,
 			base_url : ConfigLoader.getBaseUrl(),
-			id: LoginForm.id++
+			id: LoginForm.id++,
+			error: error
 		};
 	}
 
