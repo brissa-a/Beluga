@@ -2,6 +2,7 @@ package beluga.core.module;
 
 import beluga.core.Beluga;
 import beluga.core.BelugaException;
+import beluga.core.trigger.TriggerHelper.LastDispatch;
 import beluga.core.Widget;
 import haxe.Resource;
 import haxe.xml.Fast;
@@ -51,6 +52,6 @@ class ModuleImpl implements ModuleInternal
 		return new Widget(module, name);
 	}
 	
-	public var dispatcher = new Dispatcher();
+	public var lastDispatch : LastDispatch;
 
 }

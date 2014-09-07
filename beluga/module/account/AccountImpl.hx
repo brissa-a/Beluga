@@ -15,6 +15,8 @@ import beluga.module.account.exception.LoginAlreadyExistException;
 import beluga.module.account.ESubscribeFailCause;
 import beluga.core.macro.MetadataReader;
 
+using beluga.core.trigger.TriggerHelper;
+
 class AccountImpl extends ModuleImpl implements AccountInternal {
 
     private static inline var SESSION_USER = "session_user";
@@ -49,25 +51,25 @@ class AccountImpl extends ModuleImpl implements AccountInternal {
 
         if (user.length > 1) {
             //Somethings wrong in database
-			dispatcher.dispatch(triggers.loginInternalError, args);
+			lastDispatch = triggers.loginInternalError.dispatchSaveLast(args);
         } else if (user.length == 0) {
-			dispatcher.dispatch(triggers.loginWrongLogin, args);
+			lastDispatch = triggers.loginWrongLogin.dispatchSaveLast(args);
         } else {
             var tmp = user.first();
             if (tmp.hashPassword != haxe.crypto.Md5.encode(args.password)) {
-				dispatcher.dispatch(triggers.loginWrongPassword, {
+				lastDispatch = triggers.loginWrongPassword.dispatchSaveLast({
 					args: args,
 					user: tmp
 				});
             } else {
                 if (tmp.isBan) {
-                    dispatcher.dispatch(triggers.loginUserBanned, {
+                    lastDispatch = triggers.loginUserBanned.dispatchSaveLast({
 						args: args,
 						user: tmp
 					});
                 } else {
                     loggedUser = tmp;
-                    dispatcher.dispatch(triggers.loginSuccess, {
+                    lastDispatch = triggers.loginSuccess.dispatchSaveLast({
 						args: args,
 						user: tmp
 					});
