@@ -58,17 +58,6 @@ class AccountTest {
         Sys.print(html);
     }
 
-    public function loginFail(err : String, unused_args : Dynamic) {
-        var widget = acc.getWidget("login");
-        widget.context = {error : err};
-		
-        var loginWidget = widget.render();
-        var html = Renderer.renderDefault("page_login", "Authentification", {
-            loginWidget: loginWidget
-        });
-        Sys.print(html);
-    }
-
     public function logout() {
         var html = Renderer.renderDefault("page_accueil", "Accueil", {success : "You're disconnected"});
         Sys.print(html);
