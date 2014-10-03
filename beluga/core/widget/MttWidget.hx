@@ -12,9 +12,12 @@ import beluga.core.Beluga;
 import beluga.core.module.ModuleImpl;
 import beluga.core.module.Module;
 import beluga.core.macro.ConfigLoader;
+import beluga.tool.Html;
 
 import haxe.Template;
 import haxe.Resource;
+
+using StringTools;
 
 class MttWidget<WImpl: ModuleImpl> implements Widget {
     public var mod: WImpl;
@@ -50,7 +53,13 @@ class MttWidget<WImpl: ModuleImpl> implements Widget {
 
     private function getMacro() {
         var m = {
-            i18n: MttWidget.getI18nKey.bind(_, i18n, _, getContextIntern())
+            i18n: MttWidget.getI18nKey.bind(_, i18n, _, getContextIntern()),
+            value: function (resolve : String -> Dynamic, val : String) : String {
+                if (val != "null") {
+                    return "value=\"" + val + "\"";
+                }
+                return "";
+            }
         };
         return m;
     }

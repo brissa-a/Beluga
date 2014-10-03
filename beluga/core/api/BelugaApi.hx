@@ -23,7 +23,6 @@ class BelugaApi implements IAPI<String> {
 
     //Handle url like www.beluga.fr?trigger=login
     public function doDefault(d : Dispatch) {
-        Sys.print("Welcome !");
     }
 
     public function doBeluga(d : Dispatch) {

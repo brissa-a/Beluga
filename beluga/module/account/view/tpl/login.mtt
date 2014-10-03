@@ -1,4 +1,4 @@
-<div class="beluga account login" id="beluga_::_id::">
+<div class="beluga account login container" id="beluga_::_id::">
     <h1>Connectez vous</h1>
     ::if (error)::
     ::if (error != "")::

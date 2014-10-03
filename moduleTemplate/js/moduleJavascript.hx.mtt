@@ -1,6 +1,6 @@
 package beluga.module.::packageName::.js;
 
-class Javascript
+class ::className::Javascript
 {
 
     // Every files containing this method inside a js folder will be compiled to beluga javascript

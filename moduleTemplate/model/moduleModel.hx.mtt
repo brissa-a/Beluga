@@ -1,0 +1,11 @@
+package beluga.module.::packageName::.model;
+
+import sys.db.Object;
+import sys.db.Types;
+
+@:table("beluga_::packageName::_model")
+@:id(id)
+class ::className::Model extends Object {
+    public var id : SId;
+
+}
