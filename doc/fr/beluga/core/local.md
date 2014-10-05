@@ -1,16 +1,16 @@
 #La localisation
 
-Beluga implémente son propre systeme de localisation.
+Beluga implémente son propre système de localisation.
 
 ##Utilisation simple
-Tout d'abord il faut créer un dossier contenant tout les fichiers de localisation quelque part dans l'arboréscence de Beluga.
-Le dossier et son contenu doit ressembler a ca:
+Tout d'abord il faut créer un dossier contenant tous les fichiers de localisation quelque part dans l'arboréscence de Beluga.
+Le dossier et son contenu doivent ressembler à ca:
 ```
 local
 |-- en_US.json
 `-- fr_FR.json
 ```
-Chaque fichier est un fichier au format json et ne doit contenir qu'une seul langue.
+Chaque fichier est un fichier au format json et ne doit contenir qu'une seule langue.
 Le contenu d'un fichier est comme ceci:
 
 ```json
@@ -21,7 +21,7 @@ Le contenu d'un fichier est comme ceci:
 }
 ```
 
-Récupérer une valeur et changer de langue se fait ensuite ainsi dans le code source:
+Récupérer une valeur et changer de langue le code source se fait ainsi :
 ```haxe
 i18n = BelugaI18n.loadI18nFolder("path/to/local/");
 Sys.println(i18n.password); //Affiche "Mot de passe"
@@ -30,7 +30,7 @@ Sys.println(i18n.password); //Affiche maintenant "Password"
 ```
 
 ##Héritage
-Il est possible de hierarchiser plusieurs dossier de local. Imaginons les 2 fichier suivant:
+Il est possible de hiérarchiser plusieurs dossiers de local. Imaginons les 2 fichiers suivant:
 
 *local_father/fr_FR.json*
 ```json
@@ -47,7 +47,7 @@ Il est possible de hierarchiser plusieurs dossier de local. Imaginons les 2 fich
 }
 ```
 
-Le code suivant affiche:
+Nous pouvons maintenant coder ainsi:
 ```haxe
 father = BelugaI18n.loadI18nFolder("local_father");
 child = BelugaI18n.loadI18nFolder("local_child", father);
@@ -60,9 +60,9 @@ Sys.println(child.family)//Affiche "On est de la famille des Locals"
 ```
 
 ##Application dans un Module Beluga
-Beluga a 3 niveau de local:
-- les locals global a Beluga: Beluga.i18n
-- les locals spécifique au module: MonModule.i18n
-- les locals spécifique au widget: MonWidget.i18n
+Beluga a 3 niveaux de local:
+- les locals globales a Beluga: Beluga.i18n
+- les locals spécifiques au module: MonModule.i18n
+- les locals spécifiques au widget: MonWidget.i18n
 
-Bien évidemment *MonWidget.i18n* hérite de *MonModule.i18n* qui lui même hérite de *Beluga.i18n*;
+Bien évidemment *MonWidget.i18n* hérite de *MonModule.i18n* qui lui-même hérite de *Beluga.i18n*.
