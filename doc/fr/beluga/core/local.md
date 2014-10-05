@@ -59,8 +59,10 @@ Sys.println(child.hello) //Affiche "Bonjour je suis le fils !"
 Sys.println(child.family)//Affiche "On est de la famille des Locals"
 ```
 
-##Application dans Beluga
+##Application dans un Module Beluga
 Beluga a 3 niveau de local:
-- les locals global a Beluga
-- les locals spécifique au module
-- les locals spécifique au widget
+- les locals global a Beluga: Beluga.i18n
+- les locals spécifique au module: MonModule.i18n
+- les locals spécifique au widget: MonWidget.i18n
+
+Bien évidemment *MonWidget.i18n* hérite de *MonModule.i18n* qui lui même hérite de *Beluga.i18n*;
