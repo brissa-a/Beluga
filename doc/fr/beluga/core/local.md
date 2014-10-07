@@ -26,6 +26,7 @@ Récupérer une valeur et changer de langue le code source se fait ainsi :
 i18n = BelugaI18n.loadI18nFolder("path/to/local/");
 Sys.println(i18n.password); //Affiche "Mot de passe"
 BelugaI18n.curLang = "en_US";
+i18n = BelugaI18n.loadI18nFolder("path/to/local/");
 Sys.println(i18n.password); //Affiche maintenant "Password"
 ```
 
