@@ -104,6 +104,7 @@ class Beluga {
     }
 
     public function cleanup() {
+        Flashdata.updateTtl();
         db.close();
         Session.close(); //Very important under neko, otherwise, session is not commit and modifications may be ignored
     }
