@@ -8,31 +8,34 @@
 
 package beluga.core.api;
 
+import haxe.macro.Expr;
 import haxe.web.Dispatch;
-import haxe.Session;
 
 //import beluga.core.macro.ModuleLoader;
 
 class BelugaApi {
-    public var belugaInstance : Beluga;
-	private var config = new Map<String, DispatchConfig>();
+    private var config = new Map<String, DispatchConfig>();
 
 
     public function new() { }
-	
+    
     //Handle url like www.beluga.fr?trigger=login
     public function doDefault(d : Dispatch) {
         var apiName = d.parts.shift();
-		if (config.exists(apiName)) {
+        if (config.exists(apiName)) {
             var cfg = config.get(apiName);
             d.runtimeDispatch(cfg);
         }
-		else
-			throw new BelugaException("Can't find " + apiName + " api.");
+        else
+            throw new BelugaException("Can't find " + apiName + " api.");
     }
-	
-	public function register(apiKey : String, api : DispatchConfig) {
-		config.set(apiKey, api);
-	}
+    
+    macro public function register(ethis : Expr, apiKey : Expr, api : Expr) : Expr {
+        return macro ${ethis}.dynamicRegister(${apiKey}, Dispatch.make(${api}));
+    }
+
+    public function dynamicRegister(apiKey : String, api : DispatchConfig) {
+        config.set(apiKey, api);
+    }
 
 }

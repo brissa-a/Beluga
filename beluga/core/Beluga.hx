@@ -71,7 +71,6 @@ class Beluga {
         initDatabase(cnx);
         //Create beluga API
         api = new BelugaApi();
-        api.belugaInstance = this;
         remotingCtx = new haxe.remoting.Context();
 
         //Compile CSS assets

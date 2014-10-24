@@ -35,8 +35,6 @@ class Database {
     }
 
     public function initTable(tableClass : Class<Dynamic>) {
-//        var tableClass = ModuleLoader.resolveModel(module, table);
-
         if (Reflect.hasField(tableClass, "manager")) {
             var manager = Reflect.field(tableClass, "manager");
             if (!TableCreate.exists(manager))

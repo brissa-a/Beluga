@@ -68,7 +68,7 @@ class AccountImpl extends Module implements Account {
         beluga.db.initTable(BlackList);
         beluga.db.initTable(Friend);
         beluga.db.initTable(User);
-		beluga.api.register("account", Dispatch.make(new AccountApi(beluga, this)));
+		beluga.api.register("account", new AccountApi(beluga, this));
     }
 
     public function getLoggedUser() : User {
