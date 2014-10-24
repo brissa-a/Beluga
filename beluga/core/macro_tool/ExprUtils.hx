@@ -32,7 +32,6 @@ class ExprUtils {
                 switch (e.expr) {
                     case EBlock( blockContent ):
                         var newBlockContent = blockContent.copy();
-
                         switch (blockContent) {
                             case blockContent[0] => { expr:ECall( { expr:EConst(CIdent("super")) }, []) } :
                                 newBlockContent.insert(1, exprToInsert);
@@ -55,4 +54,17 @@ class ExprUtils {
         return constructor;
     }
     #end
+    
+    //if expr is String EConst return the value else return null
+    public static function getCString(expr : Expr) : Null<String>{
+        return switch(expr.expr) {
+            case EConst(c):
+                switch (c) {
+                    case CString(str): str;
+                    default : null;
+                }
+            default: null;
+        }
+    }
+
 }

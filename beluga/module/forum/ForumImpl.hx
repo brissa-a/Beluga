@@ -9,7 +9,7 @@ import beluga.module.forum.impl.channel.Display;
 import beluga.module.forum.impl.channel.Logic;
 
 // TODO: create a system of action depending on right / user level. add channel == admin || post message == user, admin
-
+@:Css("/module/forum/view/css/")
 class ForumImpl extends ModuleImpl implements ForumInternal{
 
     private var key : Null<String> = null;

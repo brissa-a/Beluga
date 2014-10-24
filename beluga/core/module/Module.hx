@@ -10,6 +10,7 @@ package beluga.core.module;
 
 import beluga.core.Beluga;
 import beluga.core.BelugaException;
+import beluga.core.macro.CssBuilder;
 import haxe.Resource;
 import haxe.xml.Fast;
 import sys.io.File;
@@ -17,6 +18,7 @@ import beluga.core.widget.Widget;
 
 @:autoBuild(beluga.core.metadata.Session.build())
 @:autoBuild(beluga.core.module.ModuleBuilder.build())
+@:autoBuild(beluga.core.macro.CssBuilder.readCssMetadata())
 class Module implements IModule
 {
     //Hold the instance of the Beluga object that created this module

@@ -18,6 +18,7 @@ import beluga.module.account.Account;
 import beluga.module.notification.model.NotificationModel;
 import beluga.module.notification.NotificationErrorKind;
 
+@:Css("/module/notification/view/css/")
 class NotificationImpl extends ModuleImpl implements NotificationInternal {
     public var triggers = new NotificationTrigger();
     public var widgets: NotificationWidget;

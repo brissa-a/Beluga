@@ -8,6 +8,8 @@
 
 package beluga.core;
 
+import beluga.core.macro.CssBuilder;
+import beluga.core.macro.JavascriptBuilder;
 import haxe.ds.ObjectMap;
 import haxe.Resource;
 import haxe.Session;
@@ -73,9 +75,9 @@ class Beluga {
         remotingCtx = new haxe.remoting.Context();
 
         //Compile CSS assets
-        beluga.core.macro.Css.compile();
+        CssBuilder.compile();
         //Compile JS assets
-        beluga.core.macro.JavascriptBuilder.compile();
+        JavascriptBuilder.compile();
     }
     
     inline private function initDatabase(cnx) {

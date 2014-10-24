@@ -22,6 +22,7 @@ import beluga.module.news.model.NewsModel;
 import beluga.module.news.model.CommentModel;
 import beluga.module.news.NewsErrorKind;
 
+@:Css("/module/news/view/css/")
 class NewsImpl extends ModuleImpl implements NewsInternal {
     public var triggers = new NewsTrigger();
     public var widgets: NewsWidget;

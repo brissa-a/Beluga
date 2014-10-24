@@ -19,6 +19,7 @@ import beluga.module.mail.model.MailModel;
 import beluga.module.mail.MailErrorKind;
 import beluga.module.mail.MailWidget;
 
+@:Css("/module/mail/view/css/")
 class MailImpl extends ModuleImpl implements MailInternal {
     public var triggers = new MailTrigger();
 

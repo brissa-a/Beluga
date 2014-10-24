@@ -21,6 +21,7 @@ import beluga.module.faq.model.CategoryModel;
 import beluga.module.faq.CategoryData;
 import beluga.module.faq.FaqErrorKind;
 
+@:Css("/module/faq/view/css/")
 class FaqImpl extends Module implements Faq {
     public var triggers = new FaqTrigger();
 

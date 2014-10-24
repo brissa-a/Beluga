@@ -28,6 +28,7 @@ import beluga.module.ticket.TicketErrorKind;
 
 import sys.db.Manager;
 
+@:Css("/module/ticket/view/css/")
 class TicketImpl extends ModuleImpl implements TicketInternal {
     public var triggers = new TicketTrigger();
     public var widgets: TicketWidget;

@@ -26,6 +26,7 @@ import beluga.core.FlashData;
 import haxe.Session;
 import beluga.module.account.api.AccountApi;
 import haxe.web.Dispatch;
+import beluga.core.macro.CssBuilder;
 
 //Compile JS
 import beluga.module.account.js.Javascript;
@@ -36,6 +37,7 @@ enum LastLoginErrorType {
 }
 
 @:ident(beluga.module.account.Account)
+@:Css("/module/account/view/css/")
 class AccountImpl extends Module implements Account {
 
     public var triggers = new AccountTrigger();

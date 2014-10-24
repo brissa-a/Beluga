@@ -24,6 +24,7 @@ import beluga.module.survey.model.SurveyModel;
 import beluga.module.survey.SurveyWidget;
 import beluga.module.survey.SurveyErrorKind;
 
+@:Css("/module/survey/view/css/")
 class SurveyImpl extends ModuleImpl implements SurveyInternal {
     public var triggers = new SurveyTrigger();
     public var error_id : SurveyErrorKind;

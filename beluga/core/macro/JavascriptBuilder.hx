@@ -24,14 +24,13 @@ class JavascriptBuilder
         "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js",
         ConfigLoader.getBaseUrl() + "/beluga/js/beluga.js"
     ];
-	
-	//List all classes to build to JS target
-	private static var files : Array<String> = [];
+    
+    //List all classes to build to JS target
+    private static var files : Array<String> = [];
 
     macro public static function buildScript() : Array<Field>
     {
-		files.push(Context.getLocalModule());
-		
+        files.push(Context.getLocalModule());
         return Context.getBuildFields();
     }
 
@@ -47,12 +46,12 @@ class JavascriptBuilder
         var fileContent = "package ;\nclass "+ entryPoint +" {\n    public static function main() {\n		var o = new Array<beluga.core.macro.Javascript>();";
         var classes : Array<String> = [];
 
-		//Build all js objects
+        //Build all js objects
         for (js in files) {
-			fileContent += "           o.push(new " + js + "());\n"; //Remove the file extension ".hx"
+            fileContent += "           o.push(new " + js + "());\n"; //Remove the file extension ".hx"
         }
 
-		fileContent += "		js.JQuery.JQueryHelper.JTHIS.ready(function (_) for (i in o) { i.ready(); });";
+        fileContent += "js.JQuery.JQueryHelper.JTHIS.ready(function (_) for (i in o) { i.ready(); });";
 
         //Create a temporary file to compile our javascript
         File.saveContent(ConfigLoader.installPath + "/../" + entryPoint + ".hx", fileContent + "    }\n}\n");
@@ -70,8 +69,8 @@ class JavascriptBuilder
         //Remove the temporary file
         FileSystem.deleteFile(ConfigLoader.installPath + "/../" + entryPoint + ".hx");
 
-		return macro "Done !";
-	}
+        return macro "Done !";
+    }
 
     /*
      * Return a string containing the HTML code to include all js file specified in JS.jsList like:
