@@ -16,6 +16,32 @@ import beluga.module.account.LoginFailCause;
 
 import beluga.module.account.AccountImpl;
 
+typedef SubscribeValue = {
+    login : String,
+    password : String,
+    password_conf : String,
+    email : String
+}
+
+typedef SubscribeError = {
+    login: {
+        mandatory: Bool,
+        maxLength: Bool,
+        unique: Bool
+    },
+    password: {
+        mandatory: Bool,
+        confirm: Bool,
+        minLength: Bool,
+        maxLength: Bool
+    },
+    email: {
+        mandatory: Bool,
+        isemail: Bool,
+        maxLength: Bool
+    }
+}
+
 interface Account extends IModule {
 
     public var triggers : AccountTrigger;
@@ -25,10 +51,10 @@ interface Account extends IModule {
     public var loggedUser(get, set) : User;
 
     public var isLogged(get, never) : Bool;
-    
+
     public var lastLoginError(get, set) : Null<LoginFailCause>;
-    public var lastSubscribeError(get, set) : Dynamic;
-    public var lastSubscribeValue(get, set) : Dynamic;
+    public var lastSubscribeError(get, set) : Null<SubscribeError>;
+    public var lastSubscribeValue(get, set) : Null<SubscribeValue>;
 
     public var i18n : Dynamic;
 

@@ -27,6 +27,7 @@ import haxe.Session;
 import beluga.module.account.api.AccountApi;
 import haxe.web.Dispatch;
 import beluga.core.macro.CssBuilder;
+import beluga.tool.DynamicTool;
 
 //Compile JS
 import beluga.module.account.js.Javascript;
@@ -54,16 +55,16 @@ class AccountImpl extends Module implements Account {
     public var i18n : Dynamic = BelugaI18n.loadI18nFolder("/module/account/local/");
 
     @:FlashData
-    public var lastSubscribeError(get, set) : Dynamic;
+    public var lastSubscribeError(get, set) : Null<SubscribeError>;
     @:FlashData
-    public var lastSubscribeValue(get, set) : Dynamic;
+    public var lastSubscribeValue(get, set) : Null<SubscribeValue>;
 
     public function new() {
         super();
     }
 
     override public function initialize(beluga : Beluga) {
-        i18n = BelugaI18n.loadI18nFolder("/module/account/local/");
+        i18n = BelugaI18n.loadI18nFolder("/module/account/locale/");
         this.widgets = new AccountWidget();
         beluga.db.initTable(BlackList);
         beluga.db.initTable(Friend);

@@ -24,10 +24,10 @@ class MttWidget<WImpl: IModule> implements Widget {
     private static var id = 0;
     private var template : Template;
 
-    public function new<T: IModule>(clazz : Class<T>, mttfile : String) {
+    public function new(clazz : Class<WImpl>, mttfile : String) {
         var templateFileContent = Resource.getString(mttfile);
         this.template = new haxe.Template(templateFileContent);
-        this.mod = cast Beluga.getInstance().getModuleInstance(clazz);
+        this.mod = Beluga.getInstance().getModuleInstance(clazz);
     }
 
     public function render() : String {
