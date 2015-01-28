@@ -1,1 +1,1 @@
-<h1>$$i18n(hello_world) - ::test::</h1>
+<h1>$$i18n(hello_world) - ::test:: - $$i18n(test)</h1>
