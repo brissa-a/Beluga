@@ -9,6 +9,7 @@ import beluga.module.testmodule.TestModuleWidgets;
 import beluga.module.testmodule.TestModuleTriggers;
 import beluga.module.testmodule.api.TestModuleApi;
 
+@:Css("/beluga/module/testmodule/view/test.css")
 class TestModule extends Module {
     public var triggers = new TestModuleTriggers();
     public var widgets: TestModuleWidgets;

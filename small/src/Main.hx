@@ -19,6 +19,7 @@ class Main {
         var beluga = Beluga.getInstance();
         var testModule = beluga.getModuleInstance(TestModule);
         beluga.handleRequest();
+        Sys.print("<link rel='stylesheet' href='/beluga/css/beluga.css'");
         Sys.print(testModule.widgets.helloWorld.render());
         beluga.cleanup();
     }
