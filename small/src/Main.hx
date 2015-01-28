@@ -11,14 +11,20 @@ package ;
 import beluga.Beluga;
 import php.Web;
 import beluga.module.account.Account;
+import beluga.module.account.model.User;
 
 class Main {
     public static var beluga : Beluga;
 
     static function main() {
         var beluga = Beluga.getInstance();
+        var account = beluga.getModuleInstance(Account);
+        account.triggers.subscribeSuccess.add(function (args: { user : User } ) {
+            Sys.print(" Subscribe Success");
+        });
         beluga.handleRequest();
-        Sys.print(beluga.getModuleInstance(Account).widgets.subscribeForm.render());
+        Sys.print(account.widgets.subscribeForm.render());
+        Sys.print(account.widgets.loginForm.render());
         beluga.cleanup();
     }
 }
