@@ -65,12 +65,12 @@ class BelugaI18n
         }
     }
 
-    macro public static function loadI18nFolder(folderPath : String, ?parent : Expr ) {
+    macro public static function loadI18nFolder(folderPathRaw : String, ?parent : Expr ) {
         var i18n = { };
 
         for (lang in supportedLangList) {
             try {
-                folderPath =  Context.resolvePath(folderPath + lang + ".json");
+                var folderPath =  Context.resolvePath(folderPathRaw + lang + ".json");
                 try { // try to find the local
                     Reflect.setField(i18n, lang, JsonTool.load(folderPath));
                 } catch (e: JsonToolException) {
