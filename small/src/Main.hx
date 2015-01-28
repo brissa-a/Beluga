@@ -10,24 +10,16 @@ package ;
 
 import beluga.Beluga;
 import php.Web;
-import beluga.module.account.Account;
-import beluga.module.account.model.User;
-import beluga.resource.CssBuilder;
+import beluga.module.testmodule.TestModule;
 
 class Main {
     public static var beluga : Beluga;
 
     static function main() {
         var beluga = Beluga.getInstance();
-        var account = beluga.getModuleInstance(Account);
-        Sys.print(CssBuilder.getHtmlInclude());
-        Sys.print("<meta charset=\"UTF-8\">");
-        account.triggers.subscribeSuccess.add(function (args: { user : User } ) {
-            account.loggedUser = args.user;
-        });
+        var testModule = beluga.getModuleInstance(TestModule);
         beluga.handleRequest();
-        Sys.print(account.widgets.subscribeForm.render());
-        Sys.print(account.widgets.loginForm.render());
+        Sys.print(testModule.widgets.helloWorld.render());
         beluga.cleanup();
     }
 }
