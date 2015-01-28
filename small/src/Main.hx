@@ -12,6 +12,7 @@ import beluga.Beluga;
 import php.Web;
 import beluga.module.account.Account;
 import beluga.module.account.model.User;
+import beluga.resource.CssBuilder;
 
 class Main {
     public static var beluga : Beluga;
@@ -19,6 +20,8 @@ class Main {
     static function main() {
         var beluga = Beluga.getInstance();
         var account = beluga.getModuleInstance(Account);
+        Sys.print(CssBuilder.getHtmlInclude());
+        Sys.print("<meta charset=\"UTF-8\">");
         account.triggers.subscribeSuccess.add(function (args: { user : User } ) {
             account.loggedUser = args.user;
         });
