@@ -17,6 +17,7 @@ class TestModuleHelloWorld extends MttWidget<TestModule> {
 
     override private function getContext() {
         var context = {
+            test: 42
         }
         return context;
     }
