@@ -20,7 +20,7 @@ class Main {
         var beluga = Beluga.getInstance();
         var account = beluga.getModuleInstance(Account);
         account.triggers.subscribeSuccess.add(function (args: { user : User } ) {
-            Sys.print(" Subscribe Success");
+            account.loggedUser = args.user;
         });
         beluga.handleRequest();
         Sys.print(account.widgets.subscribeForm.render());
